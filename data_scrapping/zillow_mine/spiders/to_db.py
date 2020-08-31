@@ -18,11 +18,10 @@ class db_parse:
         self.sslmode = ssl
         self.password = passw
         self.parameter = {'dbname': self.db, 'user': self.user, 'port': self.port, 'sslmode': self.sslmode}
-        self.path = os.getcwd() + '\sql_queries'
+        self.path = os.getcwd() + '\zillow_mine\spiders\sql_queries'
 
     def connect(self):
-
-        myConnection = psycopg2.connect( 
+        myconnection = psycopg2.connect( 
             host=self.host, 
             user=self.user, 
             port = self.port,
@@ -30,10 +29,10 @@ class db_parse:
             dbname=self.db
         )
 
-        self.doQuery(myConnection)
-        myConnection.close()
+        self.query(myconnection)
+        myconnection.close()
 
-    def doQuery(self, conn):
+    def query(self, conn):
         cur = conn.cursor()
         conn.autocommit = True
         cur.execute(self.check_table())
@@ -58,7 +57,7 @@ class db_parse:
 
 
     def check_table(self):
-        with open(self.path + '\\check_table.sql', 'r') as rf:
+        with open(self.path + '\\initiate_table.sql', 'r') as rf:
             return rf.read()
 
     def delete_table(self, tabs):
@@ -68,6 +67,11 @@ class db_parse:
     def retreive(self):
         with open(self.path + '\\retreive.sql', 'r') as rf:
             return rf.read()
+
+    def check_dup(self):
+        with open(self.path + '\\check_dups.sql', 'r') as rf:
+            return rf.read()
+
 
     def insert_to_table(self, table, data, cur):
         with open(self.path + '\\insert.sql', 'r') as rf:

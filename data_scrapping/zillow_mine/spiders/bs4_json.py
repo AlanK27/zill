@@ -1,7 +1,8 @@
 
 from bs4 import BeautifulSoup
 from datetime import date,  timedelta
-from to_db import db_parse
+from zillow_mine.spiders.to_db import db_parse
+# from to_db import db_parse
 
 import urllib.request
 
@@ -9,9 +10,8 @@ import urllib.request
 
 class bsj:
 
-    def __init__(self):
-        # put back page_source
-        self.page_source = 0
+    def __init__(self, page_source = 0):
+        self.page_source = page_source
         self.dic = []
         self.data = []
         self.addrs = 0
@@ -27,19 +27,13 @@ class bsj:
         self.neighbor = 0
         self.date = 0
 
-    def exceptz(self, numb):
-        try:
-            self.dic.append(numb)
-        except:
-            self.dic.append(0)
-        return self.dic
-
     def extract(self):
 
         self.dic = []
-        filin = 'C:\\Users\\kai_t\\Desktop\\projects\\zillow\\data_scrapping\\zillow_mine\\spider.py\\rental.html'
-        # soup = BeautifulSoup(self.page_source)
-        soup = BeautifulSoup(open(filin), features="html.parser")
+        print('extract')
+        soup = BeautifulSoup(self.page_source, 'html.parser')
+        # filin = 'C:\\Users\\kai_t\\Desktop\\projects\\zillow\\data_scrapping\\zillow_mine\\spiders\\rental.html'
+        # soup = BeautifulSoup(open(filin), features="html.parser")
         
         divs = soup.findAll("div", {"class": "col-md-4"})
         for sub in divs:
@@ -78,9 +72,7 @@ class bsj:
     def parse_db(self):
         inser = db_parse(data = self.data)
         inser.connect()
-
-    def test(self):
-        print('yes')
+        print('parsed to db')
 
     def initate(self):
         self.extract()
@@ -90,10 +82,10 @@ class bsj:
 
 
 
-# def clean():
-#     x = bsj()
-#     x.extract()
-#     x.parse_db()
+def clean():
+    x = bsj()
+    x.extract()
+    x.parse_db()
 
-# if __name__ == '__main__':
-#     clean()
+if __name__ == '__main__':
+    clean()
