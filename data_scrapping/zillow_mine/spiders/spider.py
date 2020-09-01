@@ -34,19 +34,17 @@ class crawl:
 
 
     def cycle(self):
-        try:
+        # try:
             element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, 'pagination-links')))
-            print('tried')
-            for i in range(2):
+            for i in range(4):
                 spyder = bsj(self.driver.page_source)
                 spyder.initate()
-                print('next page')
                 self.next_pg()
             self.driver.quit()
 
-        except:
-            print('didnt connect')
-            exit()
+        # except:
+        #     print('didnt connect')
+        #     exit()
 
     def initiate(self):
         self.driver = webdriver.Chrome(self.path)

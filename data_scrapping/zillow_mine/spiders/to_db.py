@@ -4,57 +4,58 @@ import os
 import mysql.connector
 
 
-
 class db_parse:
 
-    def __init__(self, table = [], data = [], db = 'zeal', user = 'postgres', port = '5433', ssl='prefer', passw = 'whore11'):
+
+    def __init__(self, table = [], data = [], db = 'zillwow', user = 'root', port = '3306', ssl='prefer'):
         self.data = data
         self.db = db
-        self.host = 'localhost'
+        self.host = '127.0.0.1'
         self.user = user
-        self.table = table
-        self.parameter = {}
+        self.password = []
         self.path = os.getcwd() + '\zillow_mine\spiders\sql_queries'
-
-    @classmethod
-    def pw(cls, password):
-        pws = input('server password:')
-        cls.password or pws
+        # self.path = os.getcwd() + '\sql_queries'
 
     def connect(self):
-        myconnection = psycopg2.connect( 
-            host=self.host, 
-            user=self.user, 
-            port = self.port,
-            password=self.password, 
-            dbname=self.db
+        print('connecting')
+        if len(self.password) < 2:
+            # self.password = input('server pw:')
+            self.password = 'whore11'
+        cnx = mysql.connector.connect(
+            user = 'root',
+            host = '127.0.0.1',
+            password = self.password,
+            database = 'testbase'
         )
-
-        self.query(myconnection)
-        myconnection.close()
+        cnx.autocommit=True
+        print('cnx connected')
+        # mycursor = cnx.cursor()
+        # with open(self.path + '\\initiate_table.sql', 'r') as f:
+        #     result = mycursor.execute(f.read(), multi=True)
+        self.query(cnx)
+        cnx.close()
 
     def query(self, conn):
         cur = conn.cursor()
-        conn.autocommit = True
-        cur.execute(self.check_table())
+        cur.execute('CREATE TABLE IF NOT EXISTS zill (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS today (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS yesterday (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS main (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
+        
+  
         try:
             cur.execute('select dates from today limit 1')
             datee = cur.fetchone()[0]
-
-            print('try1')
             if datetime.date.today() > datee:
-                print('date pass')
                 cur.execute('delete from yesterday;')
-                cur.execute('INSERT INTO yesterday select * from today;')
+                cur.execute('INSERT INTO yesterday SELECT * FROM today;')
                 cur.execute('delete from today;')
                 self.insert_to_table('today', self.data, cur)
             else:
                 self.insert_to_table('today', self.data, cur)
-
-
+                #impliment check_dups
         except:
             self.insert_to_table('today', self.data, cur)
-
 
 
     def check_table(self):
@@ -82,6 +83,7 @@ class db_parse:
             cur.execute(quer, d)
         cur.execute('insert into main select * from {tab};'.format(tab = table))
 
+
     def operation(self):
         with open(self.path + '\\operation.sql', 'r') as rf:
             return rf.read()
@@ -90,13 +92,9 @@ class db_parse:
         with open(self.path + '\\test.sql', 'r') as rf:
             return rf.read()
 
-    def active(self):
-        x = db_parse()
-        x.connect()
-
-# if __name__ == '__main__':
-#     x = db_parse(table = 0)
-#     x.connect()
+if __name__ == '__main__':
+    x = db_parse()
+    x.connect()
 
 
 

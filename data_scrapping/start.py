@@ -3,7 +3,7 @@ from zillow_mine.spiders.spider import crawl
 
 
 def run():
-    print('this is starting')
+    print('starting')
     x = crawl()
     x.initiate()
     # x = call()
