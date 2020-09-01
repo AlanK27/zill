@@ -1,8 +1,7 @@
 import datetime
 from datetime import date
 import os
-import pgdb
-import psycopg2
+import mysql.connector
 
 
 
@@ -13,12 +12,14 @@ class db_parse:
         self.db = db
         self.host = 'localhost'
         self.user = user
-        self.port = port
         self.table = table
-        self.sslmode = ssl
-        self.password = passw
-        self.parameter = {'dbname': self.db, 'user': self.user, 'port': self.port, 'sslmode': self.sslmode}
+        self.parameter = {}
         self.path = os.getcwd() + '\zillow_mine\spiders\sql_queries'
+
+    @classmethod
+    def pw(cls, password):
+        pws = input('server password:')
+        cls.password or pws
 
     def connect(self):
         myconnection = psycopg2.connect( 
