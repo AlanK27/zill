@@ -14,13 +14,13 @@ class db_parse:
         self.user = user
         self.password = []
         self.path = os.getcwd() + '\zillow_mine\spiders\sql_queries'
-        # self.path = os.getcwd() + '\sql_queries'
 
     def connect(self):
         print('connecting')
+        print(self.password)
         if len(self.password) < 2:
-            # self.password = input('server pw:')
-            self.password = 'whore11'
+            self.password = input('server pw:')
+            
         cnx = mysql.connector.connect(
             user = 'root',
             host = '127.0.0.1',
@@ -37,10 +37,10 @@ class db_parse:
 
     def query(self, conn):
         cur = conn.cursor()
-        cur.execute('CREATE TABLE IF NOT EXISTS zill (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
-        cur.execute('CREATE TABLE IF NOT EXISTS today (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
-        cur.execute('CREATE TABLE IF NOT EXISTS yesterday (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
-        cur.execute('CREATE TABLE IF NOT EXISTS main (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),rent float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS zill (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS today (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS yesterday (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),year int,price_sq float(2),neighbor varchar(5));')
+        cur.execute('CREATE TABLE IF NOT EXISTS main (dates date,addrs varchar(150),bedroom int,sqft int,bathroom int,parking int,price float(2),rental_in float(2),year int,price_sq float(2),neighbor varchar(5));')
         
   
         try:

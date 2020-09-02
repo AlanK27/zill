@@ -8,6 +8,8 @@ const front = require('../controller/front')
 const router = express.Router();
 
 
-router.get('/admin', front.front);
+router.get('/', front.front);
 
 module.exports = router;
+
+

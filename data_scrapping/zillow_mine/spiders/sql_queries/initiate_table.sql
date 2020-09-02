@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS zill (
     parking int,
     price float(2),
     rental_in float(2),
-    rent float(2),
     year int,
     price_sq float(2),
     neighbor varchar(5)
@@ -25,7 +24,6 @@ CREATE TABLE IF NOT EXISTS today (
     parking int,
     price float(2),
     rental_in float(2),
-    rent float(2),
     year int,
     price_sq float(2),
     neighbor varchar(5)
@@ -40,7 +38,6 @@ CREATE TABLE IF NOT EXISTS yesterday (
     parking int,
     price float(2),
     rental_in float(2),
-    rent float(2),
     year int,
     price_sq float(2),
     neighbor varchar(5)
@@ -55,7 +52,6 @@ CREATE TABLE IF NOT EXISTS main (
     parking int,
     price float(2),
     rental_in float(2),
-    rent float(2),
     year int,
     price_sq float(2),
     neighbor varchar(5)
