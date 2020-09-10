@@ -12,4 +12,3 @@ router.get('/', front.front);
 
 module.exports = router;
 
-

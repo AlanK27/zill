@@ -6,14 +6,11 @@ module.exports = class Db {
     this.data = data;
   }
 
-  static fetchAll() {
-    return db.execute('select * from testbase.main limit 5;');
+  static fetchA(df, ofset, amnt) {
+    return db.execute(`select * from ${df} limit ${ofset},${amnt};`);
+  }
+
+  static db_size(df) {
+    return db.execute(`select count(*) from ${df}`)
   }
 }
-
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 
-from zillow_mine.spiders.spider import crawl
+from zillow_mine.spiders.spider_selen import crawl
 
 
 def run():
