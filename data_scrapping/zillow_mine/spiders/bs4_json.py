@@ -6,48 +6,47 @@ from zillow_mine.spiders.to_db import db_parse
 
 class bsj:
 
-    def __init__(self, page_source = 0):
+    def __init__(self, page_source = []):
         self.page_source = page_source
         self.dic = []
         self.data = []
+
+
+    def stripz(self, inn):
+        return inn.strip('$').replace(',','')
+
+    def num_test(self, numb):
+        numbz = numb.replace('.','').strip('$')
+        if numbz.isnumeric():
+            return numb
+        else:
+            return None
 
     def extract(self):
 
         self.dic = []
         soup = BeautifulSoup(self.page_source, 'html.parser')
-        
-        divs = soup.findAll("div", {"class": "col-md-4"})
+        divs = soup.find_all("tr", {"class":"tableRow"})
+
         for sub in divs:
-            try:
-                addrs = sub.find('h4', {'class':'card-title'}).get_text()
-                md6 = sub.findAll('div', {'class':'col-md-6'})
-
-                col1 = md6[0].findAll('div', {'class':'f_icon_text'})
-                bed = col1[0].get_text().strip().split()[0]
-                sqft = col1[1].get_text().strip().split()[0].replace(',', '')
-
-                col2 = md6[1].findAll('div', {'class':'f_icon_text'})
-                bath = col2[0].get_text().strip().split()[0]
-                park = col2[1].get_text().strip().split()[0]
-
-                row = sub.findAll('div', {'class':'row f_row'})
+    
                 
-                col3 = row[0].findAll('h3', {'class':'green-text'})
-                price = col3[0].get_text().strip().strip('$').replace(',', '')
-                rental_in = col3[1].get_text().strip().strip('$').replace(',', '')
+            address = sub.find('a', {'class':'address'}).get_text()
+            location =  sub.find('div', {'class':'location'}).get_text()
+            price = self.stripz(sub.find('td', {'class':'column column_3 col_price'}).get_text())
+            price = self.num_test(price)
+            beds = sub.find('td', {'class':'column column_4 col_beds'}).get_text()
+            beds = self.num_test(beds)
+            baths = sub.find('td', {'column column_5 col_baths'}).get_text()
+            baths = self.num_test(baths)
+            sqft = self.stripz(sub.find('td', {'class':'column column_6 col_sqft'}).get_text())
+            sqft = self.num_test(sqft)
+            per_sqft = self.stripz(sub.find('td', {'class':'column column_7 col_ppsqft'}).get_text())
+            per_sqft = self.num_test(per_sqft)
 
-                col4 = row[1].findAll('h3')
-                year = col4[0].get_text().strip()
-                price_sq = col4[1].get_text().strip().strip('$').replace(',', '')
-
-                col5 = row[2].findAll('h3')
-                neighbor = col5[1].get_text()
-
-                self.dic = [str(date.today()), addrs, bed, sqft, bath, park, price, rental_in, year, price_sq, neighbor]
-                self.data.append(self.dic)
-            except:
-                pass
-       
+            self.dic = [str(date.today() - timedelta(days=1)), address, location, price, beds, baths, sqft, per_sqft]
+            self.data.append(self.dic)
+    
 
     def parse_db(self):
         inser = db_parse(data = self.data)
@@ -58,7 +57,7 @@ class bsj:
         self.parse_db()
 
 
-# if __name__ == '__main__':
-#     x = bsj()
-#     x.extract()
-#     x.parse_db()
+if __name__ == '__main__':
+    x = bsj()
+    x.extract()
+    x.parse_db()

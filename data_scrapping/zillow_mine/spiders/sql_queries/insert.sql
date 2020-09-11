@@ -1,4 +1,4 @@
 
 
-INSERT INTO {tab} (dates, addrs, bedroom, sqft, bathroom, parking, price, rental_in, year, price_sq, neighbor) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
-
+INSERT INTO {tab} (date, address, location, price, beds, baths, sqft, per_sqft)
+VALUES (%s,%s,%s,%s,%s,%s,%s,%s);

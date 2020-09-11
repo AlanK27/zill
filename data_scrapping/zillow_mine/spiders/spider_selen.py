@@ -13,31 +13,42 @@ from zillow_mine.spiders.bs4_json import bsj
 class crawl:
 
 
-    def __init__(self, site = 'https://www.noradarealestate.com/real-estate-investments/'):
+    def __init__(self, site = 'https://www.redfin.com/city/10201/NV/Las-Vegas/filter/max-days-on-market=1d'):
         self.path = 'C:/chromedriver/chromedriver.exe'
         self.site = site
         self.driver = []
 
     def next_pg(self):
-        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, 'pagination-links')))
-        main_id = self.driver.find_element_by_id('pagination-links')
-        indice = main_id.find_elements_by_tag_name('a')
-        for n in indice:
-            if 'next' in n.text:
-                n.click()
-                self.driver.implicitly_wait(7)
-                break
-
-        self.driver.switch_to_window(self.driver.window_handles[0])
-
-
-    def cycle(self):
+        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID, 'content')))
         try:
-            element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, 'pagination-links')))
-            for i in range(4):
-                spyder = bsj(self.driver.page_source)
+            q = self.driver.find_element_by_css_selector("button[class='clickable buttonControl button-text'][data-rf-test-id='react-data-paginate-next']")
+            q.click()
+            wait = WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.CLASS_NAME, "address")))
+            self.driver.switch_to_window(self.driver.window_handles[0])
+            return True
+        except:
+            return False
+
+
+    def crawler(self):
+        try:
+
+            wait = WebDriverWait(self.driver, 10)
+            element = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "PagingControls")))
+            q = self.driver.find_element_by_css_selector("button[class='ModeOption button-text']")
+            q.click()
+            self.driver.switch_to_window(self.driver.window_handles[0])
+            element_addr = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "location")))
+            
+            
+            fg = True
+
+            #check DB condition
+
+            while fg:
+                spyder = bsj(page_source = self.driver.page_source)
                 spyder.initate()
-                self.next_pg()
+                fg = self.next_pg()
             self.driver.quit()
 
         except:
@@ -48,7 +59,7 @@ class crawl:
         self.driver = webdriver.Chrome(self.path)
         self.driver.get(self.site)
         print(self.driver.title)
-        self.cycle()
+        self.crawler()
 
 if __name__ == '__main__':
     x = crawl()
