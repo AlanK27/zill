@@ -54,7 +54,6 @@ class db_parse:
             password = self.password,
             database = self.db
         )
-        self.conn.autocommit=True
         cur = self.conn.cursor(buffered=True)
         try:
             cur.execute('select date from today')
@@ -86,7 +85,7 @@ if __name__ == '__main__':
     x.connect()
     if x.check_db():
         pass
-    x.dc()
+    x.disconnect()
 
 
 
