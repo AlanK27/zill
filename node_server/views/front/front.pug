@@ -1,0 +1,35 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel = 'stylesheet', href='/css/product.css')
+    link(rel = 'stylesheet', href='/css/forms.css')
+    link(rel = 'stylesheet', href='/css/table.css')
+    link(rel = 'stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+
+        
+block content
+    h1 Today's housing data
+
+    .table-refresh
+        table.table-refresh__table
+            thead
+                tr
+                    th Date
+                    th Address
+                    th Location
+                    th Price
+                    th Bedrooms
+                    th Bathrooms
+                    th Sqft
+                    th Price per Sqft
+            tbody
+                each ele in productz
+                    tr
+                        each key in ele
+                            td= key
+            tfoot
+                tr
+                    th(colspan='6')
+
+block pagination        
+       

@@ -1,0 +1,18 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel = 'stylesheet', href='/css/product.css')
+    link(rel = 'stylesheet', href='/css/forms.css')
+    link(rel = 'stylesheet', href='/css/table.css')
+    link(rel = 'stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+
+        
+block content
+
+       form.product-form(action="/search", method="POST")
+            .form-control
+                label(for="search address") Search Address
+                input(type="text", name="address")#address
+            
+            button.btn(type="submit") search
+        
