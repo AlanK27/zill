@@ -1,8 +1,8 @@
 node_modules
 .env
 data/
-data_scrapping_test/
-env/
 node_server/
+env/
+data_scrapping_test/
 data_scrapping/zillow_mine/spider/rental.html
 0main.py

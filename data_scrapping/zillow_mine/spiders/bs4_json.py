@@ -1,10 +1,10 @@
-
 from bs4 import BeautifulSoup
 from datetime import date,  timedelta
 from zillow_mine.spiders.to_db import db_parse
 
 
 class bsj:
+
 
     def __init__(self, page_source = []):
         self.page_source = page_source
@@ -15,12 +15,14 @@ class bsj:
     def stripz(self, inn):
         return inn.strip('$').replace(',','')
 
+
     def num_test(self, numb):
         numbz = numb.replace('.','').strip('$')
         if numbz.isnumeric():
             return numb
         else:
             return None
+
 
     def extract(self):
 
@@ -44,8 +46,11 @@ class bsj:
                 per_sqft = self.stripz(sub.find('td', {'class':'column column_7 col_ppsqft'}).get_text())
                 per_sqft = self.num_test(per_sqft)
 
-                self.dic = [str(date.today()), address, location, price, beds, baths, sqft, per_sqft]
-                self.data.append(self.dic)
+                if (address is None) | (price is None):
+                    pass
+                else:
+                    self.dic = [str(date.today()), address, location, price, beds, baths, sqft, per_sqft]
+                    self.data.append(self.dic)
            
             except:
                 pass

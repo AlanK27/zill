@@ -1,6 +1,7 @@
 import datetime
 from datetime import date, timedelta
 import os
+from os import listdir
 import mysql.connector
 
 
@@ -55,15 +56,25 @@ class db_parse:
             database = self.db
         )
         cur = self.conn.cursor(buffered=True)
-        try:
-            cur.execute('select date from today')
-            datee = cur.fetchone()
 
-            if (date.today() > datee[0].date()):
+
+
+        with open(self.path + '\\initiate_table.sql', 'r') as rf:
+            query = rf.read().split(';') 
+        for squ in query:
+            cur.execute(squ, multi=True)
+
+        try:
+            cur.execute('select max(date) from today')
+            datee = cur.fetchone()
+            print(date.today())
+            print(datee[0])
+            if (date.today() > datee[0]):
                 print('refreshing T_Y')
-                cur.execute('delete from yesterday;')
-                cur.execute('INSERT INTO yesterday SELECT * FROM today;')
-                cur.execute('delete from today;')
+                with open(self.path + '\\operation.sql', 'r') as rf:
+                    query = rf.read().split(';') 
+                for squ in query:
+                    cur.execute(squ, multi=True)
                 return True
             else:
                 print('already scrapped today')

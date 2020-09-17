@@ -56,7 +56,6 @@ class crawl:
 
 
     def initiate(self):
-        # need to add timer
         if self.db_check():
             print('db check pass')
             self.driver = webdriver.Chrome(self.path)
