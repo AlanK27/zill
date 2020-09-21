@@ -5,7 +5,7 @@ from os import listdir
 import mysql.connector
 
 
-class db_parse:
+class parse:
 
 
     def __init__(self,  data = [], table = [], db = 'rfin_db', user = 'root', port = '3306', ssl='prefer'):
@@ -15,8 +15,8 @@ class db_parse:
         self.db = db
         self.host = '127.0.0.1'
         self.user = user
-        self.password = 'whore11'
-        self.path = os.getcwd() + '\zillow_mine\spiders\sql_queries'
+        self.password = '*****'
+        self.path = os.getcwd() + '\mine\spiders\queries'
         self.conn = []
         self.cur = []
 

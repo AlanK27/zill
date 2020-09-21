@@ -1,13 +1,13 @@
 import os
-from db_calc.mysql_db.conn_db import db_conn
+from calc.mysql.conn import conn
 
 
-class query(db_conn):
+class query(conn):
 
 
     def __init__(self):
         super().__init__()
-        self.path = os.getcwd() + "\db_calc\queries\sql_queries"
+        self.path = os.getcwd() + "\calc\queries\queries"
 
     def del_dups(self):
 

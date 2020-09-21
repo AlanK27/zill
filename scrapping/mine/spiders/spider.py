@@ -5,8 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from zillow_mine.spiders.bs4_json import bsj
-from zillow_mine.spiders.to_db import db_parse
+from mine.spiders.bs4 import bsj
+from mine.spiders.db import parse
+import os
 import time
 
 
@@ -15,6 +16,7 @@ class crawl:
 
     def __init__(self, site = 'https://www.redfin.com/city/10201/NV/Las-Vegas/filter/max-days-on-market=1d'):
         self.path = 'C:/chromedriver/chromedriver.exe'
+        self.path = os.getcwd() + '\mine\driver' + '\chromedriver.exe'
         self.site = site
         self.driver = []
 
@@ -48,7 +50,7 @@ class crawl:
 
 
     def db_check(self):
-        conn = db_parse()
+        conn = parse()
         conn.connect()
         fg = conn.check_db()
         conn.disconnect()

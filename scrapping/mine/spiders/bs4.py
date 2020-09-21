@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import date,  timedelta
-from zillow_mine.spiders.to_db import db_parse
+from mine.spiders.db import parse
 
 
 class bsj:
@@ -57,7 +57,7 @@ class bsj:
 
 
     def parse_db(self):
-        inser = db_parse(data = self.data)
+        inser = parse(data = self.data)
         inser.initiate()
 
 

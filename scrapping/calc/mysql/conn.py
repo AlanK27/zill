@@ -4,14 +4,14 @@ import os
 import mysql.connector
 
 
-class db_conn:
+class conn:
 
 
     def __init__(self, db = 'rfin_db', user = 'root', port = '3306', ssl='prefer'):
         self.db = db
         self.host = '127.0.0.1'
         self.user = user
-        self.password = 'whore11'
+        self.password = '*****'
         self.conn = []
         self.cur = []
 
