@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from zillow_mine.spiders.bs4_json import bsj
 from zillow_mine.spiders.to_db import db_parse
+import os
 import time
 
 
@@ -14,7 +15,7 @@ class crawl:
 
 
     def __init__(self, site = 'https://www.redfin.com/city/10201/NV/Las-Vegas/filter/max-days-on-market=1d'):
-        self.path = 'C:/chromedriver/chromedriver.exe'
+        self.path = os.getcwd() + '\zillow_mine\driver\chromedriver.exe'
         self.site = site
         self.driver = []
 
@@ -62,7 +63,6 @@ class crawl:
             self.driver.get(self.site)
             print(self.driver.title)
             self.crawler()
-            
         else:
             print('scrap was done already')
 

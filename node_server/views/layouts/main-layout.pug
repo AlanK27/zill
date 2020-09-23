@@ -12,15 +12,15 @@ html(lang="en")
             nav.main-header__nav
                 ul.main-header__item-list
                     li.main-header__item
-                        a(href="/", class=(path === '/' ? 'active' : '')) Today's DB
+                        a(href="/", class=(path === '/' ? 'active' : '')) Database
                     li.main-header__item
-                        a(href="/weekly", class=(path === '/weekly' ? 'active' : '')) Change Weekly
+                        a(href="/weekly", class=(path === '/weekly' ? 'active' : '')) Weekly 
                     li.main-header__item
-                        a(href="/monthly", class=(path === '/monthly' ? 'active' : '')) Change Monthly
+                        a(href="/monthly", class=(path === '/monthly' ? 'active' : '')) Monthly 
                     li.main-header__item
-                        a(href="/half_year", class=(path === '/half_y' ? 'active' : '')) Change Half Year
-                    li.main-header__item
-                        a(href="/", class=(path === '/' ? 'active' : '')) holder
+                        a(href="/half_year", class=(path === '/half_y' ? 'active' : '')) Half Year
+                    //- li.main-header__item
+                    //-     a(href="/", class=(path === '/' ? 'active' : '')) holder
                     li.main-header__item
                         a(href="/search", class=(path === '/search' ? 'active' : '')) Search
         block content
@@ -40,3 +40,4 @@ html(lang="en")
                     a(href=`${path}?page=${next2Page}`) #{next2Page}
                 a(href=`${path}?page=${lastPage}`) &#187;
         block pagination
+    

@@ -1,12 +1,10 @@
 
-
 const express = require('express');
 
-const weekly_change = require('../controller/weekly_change')
+const changes = require('../controller/changes.js')
 
 const router = express.Router()
 
-router.get('/weekly', weekly_change.weekly)
+router.get('/weekly', changes.change('week1'))
 
 module.exports = router;
-

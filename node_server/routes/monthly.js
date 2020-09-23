@@ -1,12 +1,10 @@
 
-
 const express = require('express');
 
-const monthly_change = require('../controller/monthly_change.js')
+const changes = require('../controller/changes.js')
 
 const router = express.Router()
 
-router.get('/monthly', monthly_change.monthly)
+router.get('/monthly', changes.change('month1'))
 
 module.exports = router;
-

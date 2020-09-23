@@ -127,3 +127,7 @@ main {
   background: #00695c;
   color: white;
 }
+
+.headtitle {
+  text-align: center;
+}
