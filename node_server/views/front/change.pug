@@ -11,23 +11,27 @@ block content
     .headtitle
         h1 #{maintitle}
 
-    .table-refresh
-        table.table-refresh__table
-            thead
-                tr
-                    th Date
-                    th Address
-                    th Location
-                    th Price
-
-            tbody
-                each ele in productz
+    if (!productz[0] )
+        .headtitle
+            h2 Currently No #{maintitle}
+    else
+        .table-refresh
+            table.table-refresh__table
+                thead
                     tr
-                        each key in ele
-                            td= key
-            tfoot
-                tr
-                    th(colspan='6')
+                        th Date
+                        th Address
+                        th Location
+                        th Price
+
+                tbody
+                    each ele in productz
+                        tr
+                            each key in ele
+                                td= key
+                tfoot
+                    tr
+                        th(colspan='6')
 
 block pagination        
        

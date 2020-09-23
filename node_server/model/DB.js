@@ -10,7 +10,15 @@ module.exports = class Db {
     return db.execute(`
     select * 
     from ${df}
-    order by address 
+    order by date desc
+    limit ${ofset},${amnt};`);
+  }
+
+  static fetchQ(df, ofset, amnt) {
+    return db.execute(`
+    select * 
+    from ${df}
+    order by address, date desc
     limit ${ofset},${amnt};`);
   }
 

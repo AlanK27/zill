@@ -33,7 +33,7 @@ exports.change = (param) => {
             },
         
             function(callback) {
-                Db.fetchA(param, (page_number-1)*items_per_page,  items_per_page)
+                Db.fetchQ(param, (page_number-1)*items_per_page,  items_per_page)
                 .then((rows) => {
                     res.render('front/change', {
                         productz: rows[0],

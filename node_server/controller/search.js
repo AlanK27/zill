@@ -9,7 +9,6 @@ exports.getsearch = (req, res, next) => {
         pageTitle: 'Get Search',
         path: '/search',
         });
-
 }
 
 exports.postsearch = (req, res, next) => {
