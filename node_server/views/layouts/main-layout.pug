@@ -26,7 +26,7 @@ html(lang="en")
         block content
 
   
-        if (lastpage !== 1)
+        if (lastpage > 0)
             section.pagination
                 a(href=`${path}?page=1`) &#171;
                 if hasPrevious2Pages

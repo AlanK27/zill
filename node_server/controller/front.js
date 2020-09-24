@@ -23,7 +23,7 @@ exports.front = (req, res, next) => {
         function(callback) {
             Db.fetchA('today', (page_number-1)*items_per_page,  items_per_page)
             .then((rows) => {
-                res.render('front/front', {
+                res.render('front/postsearch', {
                     productz: rows[0],
                     pageTitle: 'main table',
                     path: '/',
