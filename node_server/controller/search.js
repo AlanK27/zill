@@ -12,10 +12,15 @@ exports.getsearch = (req, res, next) => {
 }
 
 exports.postsearch = (req, res, next) => {
+
     const page = +req.query.page || 1;
     const page_number = parseFloat(page);
-    const addr = req.body.address;
     let aeg;
+    if (!addr) {
+        var addr = req.query.address;
+    } else {
+        var addr = req.query.addr;
+    }
 
     async.series([
 
@@ -37,6 +42,7 @@ exports.postsearch = (req, res, next) => {
                     productz: rows[0],
                     pageTitle: 'searched address',
                     path: '/search',
+                    addrs: addr,
                     hasNextPage: items_per_page * page_number < aeg,
                     hasPreviousPage: page_number > 1,
                     nextPage: page_number + 1,
@@ -60,4 +66,9 @@ exports.postsearch = (req, res, next) => {
             })
         }
     ]);
+};
+
+
+exports.ToCSV = (req, res, next) => {
+
 };

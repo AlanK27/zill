@@ -28,16 +28,16 @@ html(lang="en")
   
         if (lastpage !== 1)
             section.pagination
-                a(href=`${path}?page=1`) &#171;
+                a(href=`${path}?page=1&address=${addrs}`) &#171;
                 if hasPrevious2Pages
-                    a(href=`${path}?page=${previous2Page}`) #{previous2Page}
+                    a(href=`${path}?page=${previous2Page}&address=${addrs}`) #{previous2Page}
                 if hasPreviousPage
-                    a(href=`${path}?page=${previousPage}`) #{previousPage}
-                a(href=`${path}?page=${currentPage}`, class='active') #{currentPage}
+                    a(href=`${path}?page=${previousPage}&address=${addrs}`) #{previousPage}
+                a(href=`${path}?page=${currentPage}&address=${addrs}`, class='active') #{currentPage}
                 if hasNextPage
-                    a(href=`${path}?page=${nextPage}`) #{nextPage}
+                    a(href=`${path}?page=${nextPage}&address=${addrs}`) #{nextPage}
                 if hasNext2Pages
-                    a(href=`${path}?page=${next2Page}`) #{next2Page}
-                a(href=`${path}?page=${lastPage}`) &#187;
+                    a(href=`${path}?page=${next2Page}&address=${addrs}`) #{next2Page}
+                a(href=`${path}?page=${lastPage}&address=${addrs}`) &#187;
         block pagination
     
