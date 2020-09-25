@@ -1,6 +1,7 @@
 
 const db = require('../util/db/mysql_db')
 
+
 module.exports = class Db {
   constructor(data) {
     this.data = data;
@@ -14,12 +15,26 @@ module.exports = class Db {
     limit ${ofset},${amnt};`);
   }
 
+  static fetchAll(df) {
+    return db.execute(`
+    select * 
+    from ${df}
+    order by date desc;`);
+  }
+
   static fetchQ(df, ofset, amnt) {
     return db.execute(`
     select * 
     from ${df}
     order by address, date desc
     limit ${ofset},${amnt};`);
+  }
+
+  static fetchQAll(df) {
+    return db.execute(`
+    select * 
+    from ${df}
+    order by address, date desc;`);
   }
 
   static db_size(df) {
@@ -40,7 +55,7 @@ module.exports = class Db {
   static search(df, addr, ofset, amnt) {
     return db.execute(`
     select * 
-    from main 
+    from ${df} 
     where address rlike ?
     order by date desc
     limit ${ofset}, ${amnt}
@@ -48,4 +63,14 @@ module.exports = class Db {
     )
   }
 
-}
+  static insert(file, table) {
+    return db.query(`
+    insert into ${table} 
+    (date, address, location, price, beds, baths, sqft, per_sqft) 
+    values ?;
+    `,  file, (err, res) => {
+          console.log(err|| res)
+        }
+    )
+  }
+};

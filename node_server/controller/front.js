@@ -1,4 +1,8 @@
 const async = require('async');
+const fastcsv = require('fast-csv');
+const fs = require('fs');
+const Json2csvParser = require('json2csv').Parser;
+
 
 const Db = require('../model/DB');
 
@@ -23,7 +27,8 @@ exports.front = (req, res, next) => {
         function(callback) {
             Db.fetchA('today', (page_number-1)*items_per_page,  items_per_page)
             .then((rows) => {
-                res.render('front/postsearch', {
+                let jsonData = JSON.parse(JSON.stringify(rows[0]));
+                res.render('front/front', {
                     productz: rows[0],
                     pageTitle: 'main table',
                     path: '/',
@@ -50,4 +55,46 @@ exports.front = (req, res, next) => {
             })
         }
     ]);
+};
+
+exports.postfront = (req, res, next) => {
+    return function() {
+        Db.fetchAll('main')
+        .then((result) =>{
+            let jsonData = JSON.parse(JSON.stringify(result[0]));
+            let json2csvParser = new Json2csvParser({ header: false});
+            let csv = json2csvParser.parse(jsonData);
+            fs.writeFile('name', csv, function(error) {
+                if (error) throw error;
+                res.setHeader('Content-Type', 'application/csv');
+                res.setHeader('Content-Disposition', 'inline; filename ="main_db.csv"');
+                res.send(csv)  
+            })
+        });
+    };
+};
+
+
+exports.upload = (req, res) => {
+    res.render('front/upload', {
+        pageTitle: 'Upload',
+        path: '/upload',}
+    ) 
+};
+
+exports.uploaded = (req, res) => {
+    
+    let stream = fs.createReadStream(req.file.path);
+    let csvData = [];
+    let csvStream = fastcsv
+        .parse()
+        .on('data', function(data) {
+            csvData.push(data);
+        })
+        .on('end', function() {
+            //removing first line: header
+            // csvData.shift()
+            // console.log(csvData)
+        });
+    stream.pipe(csvStream);
 };

@@ -33,9 +33,9 @@ block content
                     tr
                         th(colspan='6')
       
-        form.csv-form(action="/search", method="GET")
+        form.csv-form(action= path, method="POST")
             .csv-control
-                button.btn(type="submit") Save CSV
+                button.btncsv(type="save") Save as CSV
 
 block pagination        
        

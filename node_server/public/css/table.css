@@ -40,7 +40,7 @@
 }
 
 .table-refresh__options {
-    display: flex;
+    display: inline-table;
     align-items: center;
     justify-content: flex-end;
     padding: 10px 0;
@@ -55,8 +55,8 @@
     color: #991717;
     border: none;
     outline: none;
-    display: flex;
-    align-items: center;
+    display: inline-block;
+    vertical-align: bottom;
     justify-content: center;
     padding: 5px;
     border-radius: 50%;
@@ -66,4 +66,16 @@
 .table-refresh__label {
     font-size: 0.8em;
     color: #999999;
+}
+
+.csv-form {
+    border: none;
+    outline: none;
+    display: right;
+    vertical-align: right;
+    align-items: right;
+    justify-content: right;
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
 }

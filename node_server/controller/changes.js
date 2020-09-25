@@ -1,4 +1,6 @@
 const async = require('async');
+const Json2csvParser = require('json2csv').Parser;
+const fs = require('fs');
 
 const Db = require('../model/DB');
 
@@ -65,3 +67,28 @@ exports.change = (param) => {
         ]);
     }
 };
+
+
+exports.postchange = (param) => {
+    return function (req, res) {
+        Db.fetchQAll(param)
+        .then((result) =>{
+            let jsonData = JSON.parse(JSON.stringify(result[0]));
+            let json2csvParser = new Json2csvParser({ header: false});
+            let csv = json2csvParser.parse(jsonData);
+            let dicttitle = {
+                'week1': 'Weekly Changes',
+                'month1': 'Monthly Changes',
+                'month6': 'Half year Changes',
+            }
+
+            fs.writeFile('name', csv, function(error) {
+                if (error) throw error;
+                res.setHeader('Content-Type', 'application/csv');
+                res.setHeader('Content-Disposition', 'inline; filename ="'+ dicttitle[param] + '.csv"');
+                res.send(csv)  
+            })
+        });
+    }
+};
+

@@ -13,7 +13,6 @@ exports.getsearch = (req, res, next) => {
 }
 
 exports.postsearch = (req, res, next) => {
-
     const page = +req.query.page || 1;
     const page_number = parseFloat(page);
     let aeg;
@@ -24,7 +23,6 @@ exports.postsearch = (req, res, next) => {
     }
 
     async.series([
-
         function(callback) {
             Db.db_search_size('main', addr)
             .then((res) => {
