@@ -81,16 +81,16 @@ main {
 
 .pagination a {
   text-decoration: none;
-  color: #006580;
+  color: #0180f7;
   padding: 0.5rem;
-  border: 1px solid #1b5679;
+  border: 1px solid #00588b;
   margin: 0 1rem;
 }
 
 .pagination a:hover,
 .pagination a:active,
 .pagination a.active {
-  background: #00695c;
+  background: #0097ee;
   color: white;
 }
 

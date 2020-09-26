@@ -30,13 +30,13 @@
 }
 
 .table-refresh__table thead {
-    background: #394baf;
+    background: #0092cc;
 }
 .table-refresh__table tbody tr:nth-of-type(even) {
-    background: #921616;
+    background: #90cada;
 }
 .table-refresh__table tbody tr:nth-of-type(odd) {
-    background: #915656;
+    background: #83b8c7;
 }
 
 .table-refresh__options {

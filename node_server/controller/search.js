@@ -1,9 +1,12 @@
 const async = require('async');
 const fs = require('fs')
+const Json2csvParser = require('json2csv').Parser;
 
 const Db = require('../model/DB');
 
 const items_per_page = 20;
+let addrs = 0;
+
 
 exports.getsearch = (req, res, next) => {
     res.render('front/getsearch', {
@@ -20,7 +23,9 @@ exports.postsearch = (req, res, next) => {
         var addr = req.query.address;
     } else {
         var addr = req.query.addr;
-    }
+    };
+
+    addrs = addr;
 
     async.series([
         function(callback) {
@@ -68,6 +73,18 @@ exports.postsearch = (req, res, next) => {
 };
 
 
-exports.ToCSV = (req, res, next) => {
+exports.ToCSV = function (req, res) {
+    Db.searchAll('main', addrs)
+    .then((result) =>{
+        let jsonData = JSON.parse(JSON.stringify(result[0]));
+        let json2csvParser = new Json2csvParser({ header: false});
+        let csv = json2csvParser.parse(jsonData);
 
+        fs.writeFile('name', csv, function(error) {
+            if (error) throw error;
+            res.setHeader('Content-Type', 'application/csv');
+            res.setHeader('Content-Disposition', 'inline; filename ="' + addrs + '.csv"');
+            res.send(csv)  
+        })
+    });
 };

@@ -3,7 +3,6 @@ const fastcsv = require('fast-csv');
 const fs = require('fs');
 const Json2csvParser = require('json2csv').Parser;
 
-
 const Db = require('../model/DB');
 
 const items_per_page = 20;
@@ -13,6 +12,7 @@ exports.front = (req, res, next) => {
     const page = +req.query.page || 1;
     const page_number = parseFloat(page);
     let aeg;
+
 
     async.series([
 
@@ -57,22 +57,22 @@ exports.front = (req, res, next) => {
     ]);
 };
 
-exports.postfront = (req, res, next) => {
-    return function() {
-        Db.fetchAll('main')
+exports.postfront = function (req, res) {
+    Db.fetchQAll('main')
         .then((result) =>{
             let jsonData = JSON.parse(JSON.stringify(result[0]));
             let json2csvParser = new Json2csvParser({ header: false});
             let csv = json2csvParser.parse(jsonData);
+            
             fs.writeFile('name', csv, function(error) {
                 if (error) throw error;
                 res.setHeader('Content-Type', 'application/csv');
-                res.setHeader('Content-Disposition', 'inline; filename ="main_db.csv"');
+                res.setHeader('Content-Disposition', 'inline; filename = "main_db.csv"');
                 res.send(csv)  
             })
         });
-    };
 };
+
 
 
 exports.upload = (req, res) => {
@@ -92,9 +92,7 @@ exports.uploaded = (req, res) => {
             csvData.push(data);
         })
         .on('end', function() {
-            //removing first line: header
-            // csvData.shift()
-            // console.log(csvData)
+            Db.insert('main', csvData)
         });
     stream.pipe(csvStream);
 };

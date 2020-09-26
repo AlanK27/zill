@@ -37,6 +37,7 @@ module.exports = class Db {
     order by address, date desc;`);
   }
 
+
   static db_size(df) {
     return db.execute(`
     select count(*) 
@@ -59,6 +60,16 @@ module.exports = class Db {
     where address rlike ?
     order by date desc
     limit ${ofset}, ${amnt}
+    ;`, [addr]
+    )
+  }
+
+  static searchAll(df, addr) {
+    return db.execute(`
+    select * 
+    from ${df} 
+    where address rlike ?
+    order by date desc
     ;`, [addr]
     )
   }
