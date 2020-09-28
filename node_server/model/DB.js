@@ -74,12 +74,12 @@ module.exports = class Db {
     )
   }
 
-  static insert(file, table) {
+  static insert(table, file) {
     return db.query(`
     insert into ${table} 
     (date, address, location, price, beds, baths, sqft, per_sqft) 
     values ?;
-    `,  file, (err, res) => {
+    `,  [file], (err, res) => {
           console.log(err|| res)
         }
     )
