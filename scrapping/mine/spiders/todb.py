@@ -51,18 +51,15 @@ class parse:
     def check_db(self):
         self.conn = mysql.connector.connect(
             user = 'root',
-            host = '127.0.0.1',
             password = self.password,
-            database = self.db
         )
         cur = self.conn.cursor(buffered=True)
-
-
+        print('conn connected')
 
         with open(self.path + '\\initiate_table.sql', 'r') as rf:
             query = rf.read().split(';') 
         for squ in query:
-            cur.execute(squ, multi=True)
+            cur.execute(squ)
 
         try:
             cur.execute('select max(date) from today')
@@ -74,7 +71,7 @@ class parse:
                 with open(self.path + '\\operation.sql', 'r') as rf:
                     query = rf.read().split(';') 
                 for squ in query:
-                    cur.execute(squ, multi=True)
+                    cur.execute(squ)
                 return True
             else:
                 print('already scrapped today')

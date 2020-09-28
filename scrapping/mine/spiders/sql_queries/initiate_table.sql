@@ -1,57 +1,21 @@
-CREATE TABLE IF NOT EXISTS main (
-    dates date,
-    addrs varchar(150),
-    bedroom int,
-    sqft int,
-    bathroom int,
-    parking int,
-    price float(2),
-    rental_in float(2),
-    year int,
-    price_sq float(2),
-    neighbor varchar(5)
+CREATE DATABASE IF NOT EXISTS rfin_db;
+CREATE TABLE IF NOT EXISTS rfin_db.main (
+    date date ,
+    address varchar(255),
+    location varchar(255), 
+    price int,
+    beds decimal(10,2), 
+    baths decimal(10,2), 
+    sqft decimal(10,2), 
+    per_sqft decimal(10,2)
 );
-CREATE TABLE IF NOT EXISTS month1 (
+CREATE TABLE IF NOT EXISTS rfin_db.today like rfin_db.main;
+CREATE TABLE IF NOT EXISTS rfin_db.yesterday like rfin_db.main;
+CREATE TABLE IF NOT EXISTS rfin_db.month1 (
     date date,
-    address varchar(255) ,
-    location varchar(255) ,
-    price int
+    address varchar(255),
+    location varchar(255),
+    price bigint
 );
-CREATE TABLE IF NOT EXISTS month6 (
-    date date,
-    address varchar(255) ,
-    location varchar(255) ,
-    price int
-);
-CREATE TABLE IF NOT EXISTS today (
-    dates date,
-    addrs varchar(150),
-    bedroom int,
-    sqft int,
-    bathroom int,
-    parking int,
-    price float(2),
-    rental_in float(2),
-    year int,
-    price_sq float(2),
-    neighbor varchar(5)
-);
-CREATE TABLE IF NOT EXISTS week1 (
-    date date,
-    address varchar(255) ,
-    location varchar(255) ,
-    price int
-);
-CREATE TABLE IF NOT EXISTS yesterday (
-    dates date,
-    addrs varchar(150),
-    bedroom int,
-    sqft int,
-    bathroom int,
-    parking int,
-    price float(2),
-    rental_in float(2),
-    year int,
-    price_sq float(2),
-    neighbor varchar(5)
-);
+CREATE TABLE IF NOT EXISTS rfin_db.month6 like rfin_db.month1;
+CREATE TABLE IF NOT EXISTS rfin_db.week1 like rfin_db.month1;

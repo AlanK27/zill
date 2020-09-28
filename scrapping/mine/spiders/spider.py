@@ -50,7 +50,6 @@ class crawl:
 
     def db_check(self):
         conn = parse()
-        conn.connect()
         fg = conn.check_db()
         conn.disconnect()
         return fg
