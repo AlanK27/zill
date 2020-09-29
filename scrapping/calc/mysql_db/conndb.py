@@ -11,7 +11,7 @@ class conndb:
         self.db = db
         self.host = '127.0.0.1'
         self.user = user
-        self.password = 'whore11'
+        self.password = '1111five'
         self.conn = []
         self.cur = []
 

@@ -15,7 +15,7 @@ class parse:
         self.db = db
         self.host = '127.0.0.1'
         self.user = user
-        self.password = 'whore11'
+        self.password = '1111five'
         self.path = os.getcwd() + '\mine\spiders\sql_queries'
         self.conn = []
         self.cur = []

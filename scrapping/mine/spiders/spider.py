@@ -1,6 +1,7 @@
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -58,7 +59,9 @@ class crawl:
     def initiate(self):
         if self.db_check():
             print('db check pass')
-            self.driver = webdriver.Chrome(self.path)
+            options = Options()
+            options.headless = True
+            self.driver =  webdriver.Chrome(self.path, chrome_options=options)
             self.driver.get(self.site)
             print(self.driver.title)
             self.crawler()
