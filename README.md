@@ -1,9 +1,12 @@
 
+# Vegas Housing Data
 
-This project data mines housing information on zillow focusing on the Las Vegas market.
+This project data mines housing information on zillow in the surrounding Las Vegas market.
+Due to certain restrictions on zillow's own website selenium library is used in addition
+to scrapy to draw the data. 
 
-The mined data will be contained in mysql database and extracted for viewing on a webserver.
+Mined data is contained in mysql database and viewed on webserver. The server will handle
+information and update on the price changes on a weekly and monthly bases.
 
-The server will handle information and notices about changing prices weekly and monthly.
-
-Make sure to get the correct chromedriver before scrapping, in dir mine/driver/.
+###*Note*
+Make sure the chromedriver is the correct version and in directory mine/driver/.
